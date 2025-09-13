@@ -60,18 +60,32 @@ export default function Hero({ isDark, onToggleTheme }: Props) {
           </div>
         </div>
         <button
-          className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-slate-200/60 dark:border-slate-700/40 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-slate-700 dark:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors"
+          className="group inline-flex items-center justify-center w-9 h-9 rounded-full border border-slate-400/35 dark:border-slate-400/20 bg-black/5 dark:bg-white/5 bg-[radial-gradient(circle_at_50%_45%,_rgba(255,255,255,0.08),_transparent_60%)] text-slate-600 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors"
           onClick={onToggleTheme}
           aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
           title={isDark ? "Light mode" : "Dark mode"}
         >
           {isDark ? (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              className="drop-shadow-[0_0_3px_rgba(255,255,255,0.25)] group-hover:brightness-110"
+            >
               <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/>
               <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
           ) : (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              className="drop-shadow-[0_0_2px_rgba(0,0,0,0.15)] group-hover:brightness-110"
+            >
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
             </svg>
           )}

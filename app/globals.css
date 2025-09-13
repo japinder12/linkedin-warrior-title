@@ -39,6 +39,16 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Hide default number input spinners for a minimal look */
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.no-spinners[type="number"] {
+  -moz-appearance: textfield;
+}
+
 /* Range slider subtle track/thumb styling */
 input.slider, input[type="range"].slider {
   -webkit-appearance: none;

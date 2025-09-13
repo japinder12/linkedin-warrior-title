@@ -39,24 +39,26 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
       <div className="w-full max-w-3xl">
         <Hero isDark={isDark} onToggleTheme={()=>setDarkMode(!darkMode)} />
 
-        {/* Controls: two rows on md+ for balance; single horizontal scroll on small screens */}
-        <div className={`${panel} border rounded-2xl p-4 mb-6`}>
-          <div className="hidden md:grid md:grid-cols-3 gap-6 items-start content-start">
-            <RoleInput role={role} setRole={setRole} isDark={isDark} inputClass={input} />
-            <PresetsRow role={role} setRole={setRole} isDark={isDark} btnBd={btnBd} />
-            <SeedControls setSeed={setSeed} isDark={isDark} btnBd={btnBd} />
-          </div>
-          <div className="hidden md:grid md:grid-cols-2 gap-6 mt-3 items-start content-start">
-            <CountSlider count={count} setCount={setCount} isDark={isDark} />
-            <MemeModeToggle memeMode={memeMode} setMemeMode={setMemeMode} isDark={isDark} btnBd={btnBd} />
-          </div>
-          {/* Mobile: single horizontal row; all 5 controls scrollable */}
-          <div className="md:hidden flex gap-4 overflow-x-auto py-1">
-            <RoleInput role={role} setRole={setRole} isDark={isDark} inputClass={input} />
-            <PresetsRow role={role} setRole={setRole} isDark={isDark} btnBd={btnBd} />
-            <SeedControls setSeed={setSeed} isDark={isDark} btnBd={btnBd} />
-            <CountSlider count={count} setCount={setCount} isDark={isDark} />
-            <MemeModeToggle memeMode={memeMode} setMemeMode={setMemeMode} isDark={isDark} btnBd={btnBd} />
+        {/* Control Panel */}
+        <div className={`${panel} border rounded-2xl p-5 md:p-6 mb-6 border-slate-300/50 dark:border-slate-700/35`}>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-7 items-start">
+            {/* Row 1 */}
+            <div className="md:col-span-6">
+              <RoleInput role={role} setRole={setRole} isDark={isDark} inputClass={input} />
+            </div>
+            <div className="md:col-span-6">
+              <PresetsRow role={role} setRole={setRole} isDark={isDark} btnBd={btnBd} />
+            </div>
+            {/* Row 2 */}
+            <div className="md:col-span-7">
+              <CountSlider count={count} setCount={setCount} isDark={isDark} />
+            </div>
+            <div className="md:col-span-2">
+              <SeedControls isDark={isDark} onShuffle={() => setSeed(Math.floor(Math.random() * 1e9))} />
+            </div>
+            <div className="md:col-span-3">
+              <MemeModeToggle memeMode={memeMode} setMemeMode={setMemeMode} isDark={isDark} btnBd={btnBd} />
+            </div>
           </div>
         </div>
 

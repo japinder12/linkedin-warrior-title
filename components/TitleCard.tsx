@@ -69,7 +69,7 @@ export default function TitleCard({ text, dark }: Props) {
       <div className="pr-16">
         <div
           className={[
-            "text-[15px] md:text-[16px] font-medium leading-snug tracking-tight antialiased text-balance",
+            "text-[16px] md:text-[17px] font-medium leading-snug tracking-tight antialiased text-balance",
             "whitespace-normal break-words text-pretty",
           ].join(" ")}
         >
