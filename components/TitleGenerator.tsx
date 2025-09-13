@@ -14,6 +14,9 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
   const [count, setCount] = useState<number>(Math.min(16, initialCount));
   const [darkMode, setDarkMode] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [shuffling, setShuffling] = useState(false);
+  const [dieA, setDieA] = useState(5);
+  const [dieB, setDieB] = useState(1);
 
   // theme init + persist
   useEffect(() => {
@@ -166,15 +169,48 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
               <div className="mt-2 flex items-center justify-start w-full min-w-0 gap-2">
                 <button
                   className={`h-9 w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[#0A66C2]/40 hover:text-[#0A66C2] dark:hover:text-[#7CC4FF] dark:hover:border-[#7CC4FF]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/40 dark:focus-visible:ring-[#7CC4FF]/40 transition-colors`}
-                  onClick={()=>setSeed(Math.floor(Math.random()*1e9))}
+                  onClick={()=>{
+                    setSeed(Math.floor(Math.random()*1e9));
+                    setShuffling(true);
+                    const id = setInterval(()=>{
+                      setDieA(1 + Math.floor(Math.random()*6));
+                      setDieB(1 + Math.floor(Math.random()*6));
+                    }, 90);
+                    setTimeout(()=>{ clearInterval(id); setShuffling(false); }, 600);
+                  }}
                   aria-label="Shuffle seed"
                   title="Shuffle seed"
                 >
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={isDark ? "text-slate-200" : "text-slate-700"}>
-                    <rect x="3" y="3" width="8" height="8" rx="2"/>
-                    <circle cx="7" cy="7" r="1.2" fill={isDark ? "#0EA5E9" : "#2563EB"}/>
-                    <rect x="13" y="13" width="8" height="8" rx="2"/>
-                    <circle cx="17" cy="17" r="1.2" fill={isDark ? "#0EA5E9" : "#2563EB"}/>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                    className={`${isDark ? "text-slate-200" : "text-slate-700"} ${shuffling ? "animate-spin" : ""}`}
+                  >
+                    <rect x="2" y="2" width="10" height="10" rx="2"/>
+                    {(() => {
+                      const p: React.ReactNode[] = [];
+                      const pip = (cx: number, cy: number, i: number) => (
+                        <circle key={`a${i}`} cx={cx} cy={cy} r={1.2} fill={isDark ? "#0EA5E9" : "#2563EB"} />
+                      );
+                      const m = { 1: [7,7], 2: [5,5, 9,9], 3: [5,5, 7,7, 9,9], 4: [5,5, 9,5, 5,9, 9,9], 5: [5,5, 9,5, 7,7, 5,9, 9,9], 6: [5,5, 5,7, 5,9, 9,5, 9,7, 9,9] } as Record<number, number[]>;
+                      const arr = m[dieA] || m[5];
+                      for (let i = 0; i < arr.length; i+=2) p.push(pip(arr[i], arr[i+1], i));
+                      return p;
+                    })()}
+                    <rect x="12" y="12" width="10" height="10" rx="2"/>
+                    {(() => {
+                      const p: React.ReactNode[] = [];
+                      const pip = (cx: number, cy: number, i: number) => (
+                        <circle key={`b${i}`} cx={cx+10} cy={cy+10} r={1.2} fill={isDark ? "#0EA5E9" : "#2563EB"} />
+                      );
+                      const m = { 1: [7,7], 2: [5,5, 9,9], 3: [5,5, 7,7, 9,9], 4: [5,5, 9,5, 5,9, 9,9], 5: [5,5, 9,5, 7,7, 5,9, 9,9], 6: [5,5, 5,7, 5,9, 9,5, 9,7, 9,9] } as Record<number, number[]>;
+                      const arr = m[dieB] || m[1];
+                      for (let i = 0; i < arr.length; i+=2) p.push(pip(arr[i], arr[i+1], i));
+                      return p;
+                    })()}
                   </svg>
                 </button>
                 <button
@@ -206,6 +242,8 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
               </div>
             </div>
           </div>
+          {/* SR-only aria-live for link copied */}
+          <span className="sr-only" aria-live="polite" role="status">{linkCopied ? "Link copied to clipboard" : ""}</span>
         </div>
 
         {/* Results */}
