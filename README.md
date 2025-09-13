@@ -1,4 +1,4 @@
-# LinkedIn Warrior Title ⚔️
+# LinkedOut ⚔️
 
 Upgrade your LinkedIn aura in 1 click.  
 Type your role → get a lineup of ridiculous, over-inflated titles ready to copy-paste into your profile or next humblebrag post.  
@@ -22,6 +22,6 @@ This generator leans into the exaggeration, buzzwords, and corporate theater —
 ---
 
 ## 🌐 Try it
-👉 [linkedin-warrior-title.vercel.app](https://linkedin-warrior-title.vercel.app)
+👉 [linkedout.vercel.app](https://linkedout.vercel.app)
 
 ---
