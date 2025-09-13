@@ -1,3 +1,5 @@
+"use client";
+
 type Props = { text: string; index: number; dark: boolean };
 
 export default function TitleCard({ text, index, dark }: Props) {

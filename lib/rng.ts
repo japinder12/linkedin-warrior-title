@@ -7,6 +7,6 @@ export function makeRng(seed: number) {
   };
 }
 
-export function pick<T>(next: () => number, arr: T[]): T {
+export function pick<T>(next: () => number, arr: readonly T[]): T {
   return arr[Math.floor(next() * arr.length)];
 }

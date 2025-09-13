@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import TitleCard from "./TitleCard";
-import { makeRng, pick } from "../../lib/rng";
+import { makeRng, pick } from "@/lib/rng";
 import { DOMAIN_BANKS, type DomainKey } from "@/lib/banks";
-import { getDomain } from "./lib/domain";
+import { getDomain } from "@/lib/domain";
 
 export default function TitleGenerator() {
   // URL + state
@@ -87,7 +87,7 @@ export default function TitleGenerator() {
               className={`px-3 py-2 rounded-xl text-sm border ${btnBd}`}
               onClick={() => setDarkMode(!darkMode)}
             >
-              {isDark ? "Light mode" : "Dark mode"}
+              {isDark ? "☀️" : "🌙"}
             </button>
           </div>
           <p className={`text-sm ${subtle}`}>{hook}</p>
@@ -104,7 +104,7 @@ export default function TitleGenerator() {
               placeholder="e.g., Software Engineer, Project Manager, Nurse"
             />
             <div className={`mt-2 flex gap-2 text-xs ${subtle}`}>
-              {["Software Engineer","Data Scientist","Product Manager","ML Engineer","Nurse","Entrepreneur"].map(v=>(
+              {["Software Engineer","Data Scientist","Product Manager","ML Engineer","Entrepreneur"].map(v=>(
                 <button key={v} className={`px-2 py-1 rounded-lg border ${btnBd}`} onClick={()=>setRole(v)}>
                   {v.split(" ").map(w=>w[0]).join("")}
                 </button>

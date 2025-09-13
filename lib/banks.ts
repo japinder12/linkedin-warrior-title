@@ -62,6 +62,6 @@ export const DOMAIN_BANKS = {
     coresY: ["Director of Y","Head of Y"],
     postfixes: [" · Learning First"],
   },
-} as const;
+};
 
 export type DomainKey = keyof typeof DOMAIN_BANKS;
