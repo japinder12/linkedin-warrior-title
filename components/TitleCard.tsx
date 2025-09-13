@@ -49,16 +49,34 @@ export default function TitleCard({ text, dark }: Props) {
       >
         {copied ? (
           <>
-            <svg width="14" height="14" viewBox="0 0 24 24" className="text-emerald-400">
-              <path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg width="14" height="14" viewBox="0 0 24 24" className="text-slate-200">
+              <path
+                d="M20 6L9 17l-5-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             Copied
           </>
         ) : (
           <>
-            <svg width="14" height="14" viewBox="0 0 24 24" className="opacity-80">
-              <path d="M8 7h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" strokeWidth="2"/>
-              <path d="M16 7V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1" fill="none" stroke="currentColor" strokeWidth="2"/>
+            {/* Clipboard icon */}
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="opacity-80"
+            >
+              <path d="M16 4h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1" />
+              <rect x="9" y="2" width="6" height="4" rx="1.5" />
             </svg>
             Copy
           </>
