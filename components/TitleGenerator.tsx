@@ -13,6 +13,7 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
   const [seed, setSeed]   = useState<number>(initialSeed);
   const [count, setCount] = useState<number>(Math.min(16, initialCount));
   const [darkMode, setDarkMode] = useState(true);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   // theme init + persist
   useEffect(() => {
@@ -178,14 +179,20 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
                 </button>
                 <button
                   className={`h-9 w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[#0A66C2]/40 hover:text-[#0A66C2] dark:hover:text-[#7CC4FF] dark:hover:border-[#7CC4FF]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/40 dark:focus-visible:ring-[#7CC4FF]/40 transition-colors`}
-                  onClick={() => { try { navigator.clipboard.writeText(window.location.href); } catch {} }}
-                  aria-label="Copy link"
-                  title="Copy link"
+                  onClick={() => { try { navigator.clipboard.writeText(window.location.href); setLinkCopied(true); setTimeout(()=>setLinkCopied(false), 1200); } catch {} }}
+                  aria-label={linkCopied ? "Link copied" : "Copy link"}
+                  title={linkCopied ? "Link copied" : "Copy link"}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 0 0-7.07-7.07L10.76 5"/>
-                    <path d="M14 11a5 5 0 0 0-7.07 0L4.81 13.1a5 5 0 0 0 7.07 7.07L13.24 19"/>
-                  </svg>
+                  {linkCopied ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-emerald-400" aria-hidden="true">
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M8 7h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" />
+                      <path d="M16 7V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1" />
+                    </svg>
+                  )}
                 </button>
               </div>
             </div>
