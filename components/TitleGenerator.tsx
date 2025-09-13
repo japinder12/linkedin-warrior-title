@@ -98,8 +98,8 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
   const root   = isDark ? "bg-gradient-to-b from-slate-950 to-slate-900 text-slate-100" : "bg-gradient-to-b from-white to-slate-50 text-slate-900";
   const panel  = isDark ? "bg-slate-900/60 border-slate-800 backdrop-blur" : "bg-white/70 border-slate-200 backdrop-blur";
   const input  = isDark
-    ? "bg-slate-950 border-slate-800 focus:ring-2 focus:ring-[#7CC4FF]/40 focus:border-[#7CC4FF] placeholder:text-slate-500/80"
-    : "bg-white border-slate-300 focus:ring-2 focus:ring-[#0A66C2]/40 focus:border-[#0A66C2] placeholder:text-slate-400";
+    ? "bg-slate-950 border-slate-800 focus:ring-2 focus:ring-[var(--accent-40)] focus:border-[var(--accent)] placeholder:text-slate-500/80"
+    : "bg-white border-slate-300 focus:ring-2 focus:ring-[var(--accent-40)] focus:border-[var(--accent)] placeholder:text-slate-400";
   const btnBd  = isDark ? "border-slate-700" : "border-slate-300";
   const subtle = isDark ? "text-slate-400" : "text-slate-600";
   const hook = "Generate absurdly serious LinkedIn titles in one click.";
@@ -110,23 +110,27 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
         <header className="mb-6 space-y-2">
           <div className="flex items-center justify-between gap-3">
             <h1
-              style={{ fontFamily: "var(--font-display)" }}
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#084482] to-[#0A66C2] dark:from-[#2EA0FF] dark:to-[#7CC4FF]"
+              style={{
+                fontFamily: "var(--font-display)",
+                backgroundImage:
+                  "linear-gradient(90deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 55%, #084482) 100%)",
+              }}
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight bg-clip-text text-transparent"
             >
               LinkedIn Title Generator
             </h1>
             <button
-              className={`group px-3 py-2 rounded-xl text-sm border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[#0A66C2]/40 dark:hover:border-[#7CC4FF]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/40 dark:focus-visible:ring-[#7CC4FF]/40 transition-colors`}
+              className={`group px-3 py-2 rounded-xl text-sm border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[var(--accent-40)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors`}
               onClick={() => setDarkMode(!darkMode)}
               aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
             >
               {isDark ? (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className={`aria-hidden ${isDark ? "text-slate-200" : "text-slate-700"} group-hover:text-[#0A66C2] dark:group-hover:text-[#7CC4FF]`} aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className={`aria-hidden ${isDark ? "text-slate-200" : "text-slate-700"} group-hover:text-[var(--accent)]`} aria-hidden="true">
                   <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/>
                   <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               ) : (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-slate-700 group-hover:text-[#0A66C2]" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-slate-700 group-hover:text-[var(--accent)]" aria-hidden="true">
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
                 </svg>
               )}
@@ -151,8 +155,8 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
                 <div className="hidden md:flex items-center gap-1 overflow-x-auto">
                   {["Software Engineer","Data Scientist","Product Manager","ML Engineer","Entrepreneur"].map(v=>{
                     const active = v === role;
-                    const baseBtn = `h-9 px-3 rounded-full border ${btnBd} text-xs hover:bg-black/5 dark:hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/40 dark:focus-visible:ring-[#7CC4FF]/40`;
-                    const activeBtn = active ? `bg-[#0A66C2]/10 border-[#0A66C2] text-[#0A66C2]` : ``;
+                    const baseBtn = `h-9 px-3 rounded-full border ${btnBd} text-xs hover:bg-black/5 dark:hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)]`;
+                    const activeBtn = active ? `bg-[var(--accent-10)] border-[var(--accent)] text-[var(--accent)]` : ``;
                     return (
                       <button key={v} className={`${baseBtn} ${activeBtn}`} onClick={()=>setRole(v)}>
                         {v.split(" ").map(w=>w[0]).join("")}
@@ -165,10 +169,10 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
 
             {/* Seed */}
             <div className="md:col-span-1">
-              <label className={`mb-1 block text-xs uppercase tracking-widest opacity-70 ${isDark ? "text-slate-300" : "text-slate-600"}`}>Seed</label>
+              <label className={`mb-1 block text-xs uppercase tracking-widest opacity-70 ${isDark ? "text-slate-300" : "text-slate-600"}`} title="Seed controls">Seed</label>
               <div className="mt-2 flex items-center justify-start w-full min-w-0 gap-2">
                 <button
-                  className={`h-9 w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[#0A66C2]/40 hover:text-[#0A66C2] dark:hover:text-[#7CC4FF] dark:hover:border-[#7CC4FF]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/40 dark:focus-visible:ring-[#7CC4FF]/40 transition-colors`}
+                  className={`h-11 w-11 md:h-9 md:w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[var(--accent-40)] hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors`}
                   onClick={()=>{
                     setSeed(Math.floor(Math.random()*1e9));
                     setShuffling(true);
@@ -214,7 +218,7 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
                   </svg>
                 </button>
                 <button
-                  className={`h-9 w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[#0A66C2]/40 hover:text-[#0A66C2] dark:hover:text-[#7CC4FF] dark:hover:border-[#7CC4FF]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/40 dark:focus-visible:ring-[#7CC4FF]/40 transition-colors`}
+                  className={`h-11 w-11 md:h-9 md:w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[var(--accent-40)] hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors`}
                   onClick={() => { try { navigator.clipboard.writeText(window.location.href); setLinkCopied(true); setTimeout(()=>setLinkCopied(false), 1200); } catch {} }}
                   aria-label={linkCopied ? "Link copied" : "Copy link"}
                   title={linkCopied ? "Link copied" : "Copy link"}
@@ -237,7 +241,7 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
             <div className="md:col-span-1 md:col-start-6">
               <label className={`mb-1 block text-xs uppercase tracking-widest opacity-70 ${isDark ? "text-slate-300" : "text-slate-600"}`}>How Many</label>
               <div className="mt-2">
-                <input className="w-full h-1.5 accent-[#0A66C2] dark:accent-[#7CC4FF]" type="range" min={4} max={16} value={count} onChange={(e)=>setCount(Number(e.target.value))}/>
+                <input className="w-full h-1.5 accent-[var(--accent)]" type="range" min={4} max={16} value={count} onChange={(e)=>setCount(Number(e.target.value))}/>
                 <div className={`mt-1 text-xs ${isDark ? "text-slate-400" : "text-slate-600"}`}>{count} titles</div>
               </div>
             </div>

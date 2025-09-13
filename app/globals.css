@@ -9,9 +9,17 @@ html, body {
 :root {
   --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   --font-display: var(--font-sans);
+  --accent: #0A66C2;
+  --accent-10: color-mix(in srgb, var(--accent) 10%, transparent);
+  --accent-40: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.dark {
+  --accent: #7CC4FF;
+  --accent-10: color-mix(in srgb, var(--accent) 10%, transparent);
+  --accent-40: color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
 body {
   font-family: var(--font-sans);
 }
-
