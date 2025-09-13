@@ -15,7 +15,7 @@ export function makeTitleGenerators(domain: DomainKey, next: () => number, opts?
     const pre = pick(next, prefixes);
     const core = pick(next, bank.coresX).replaceAll("X", r);
     const booster = pick(next, boosters);
-    const divider = pick(next, DIVIDERS as any);
+    const divider = pick(next, DIVIDERS);
     return `${pre} ${core}${divider}${booster}`;
   };
 
