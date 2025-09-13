@@ -133,10 +133,10 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
 
         {/* Controls */}
         <div className={`${panel} border rounded-2xl p-6 mb-6`}>
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-6 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-6 items-start">
             {/* Role */}
             <div className="md:col-span-4">
-              <label className={`mb-1 block text-[10px] uppercase tracking-[0.12em] ${subtle}`}>Your Role</label>
+              <label className={`mb-1 block text-xs uppercase tracking-widest opacity-70 ${isDark ? "text-slate-300" : "text-slate-600"}`}>Your Role</label>
               <div className="flex items-center gap-2 min-w-0">
                 <input
                   className={`h-10 flex-1 rounded-lg px-3 text-base outline-none ring-1 min-w-0 ${input}`}
@@ -160,11 +160,11 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
             </div>
 
             {/* Seed */}
-            <div className="md:col-span-2">
-              <label className={`mb-1 block text-[10px] uppercase tracking-[0.12em] ${subtle}`}>Seed</label>
-              <div className="flex items-center w-full min-w-0">
+            <div className="md:col-span-1">
+              <label className={`mb-1 block text-xs uppercase tracking-widest opacity-70 ${isDark ? "text-slate-300" : "text-slate-600"}`}>Seed</label>
+              <div className="mt-2 flex items-center justify-start w-full min-w-0 gap-2">
                 <button
-                  className={`ml-2 h-9 w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[#0A66C2]/40 hover:text-[#0A66C2] dark:hover:text-[#7CC4FF] dark:hover:border-[#7CC4FF]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/40 dark:focus-visible:ring-[#7CC4FF]/40 transition-colors`}
+                  className={`h-9 w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[#0A66C2]/40 hover:text-[#0A66C2] dark:hover:text-[#7CC4FF] dark:hover:border-[#7CC4FF]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/40 dark:focus-visible:ring-[#7CC4FF]/40 transition-colors`}
                   onClick={()=>setSeed(Math.floor(Math.random()*1e9))}
                   aria-label="Shuffle seed"
                   title="Shuffle seed"
@@ -177,7 +177,7 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
                   </svg>
                 </button>
                 <button
-                  className={`ml-2 h-9 w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[#0A66C2]/40 hover:text-[#0A66C2] dark:hover:text-[#7CC4FF] dark:hover:border-[#7CC4FF]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/40 dark:focus-visible:ring-[#7CC4FF]/40 transition-colors`}
+                  className={`h-9 w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[#0A66C2]/40 hover:text-[#0A66C2] dark:hover:text-[#7CC4FF] dark:hover:border-[#7CC4FF]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/40 dark:focus-visible:ring-[#7CC4FF]/40 transition-colors`}
                   onClick={() => { try { navigator.clipboard.writeText(window.location.href); } catch {} }}
                   aria-label="Copy link"
                   title="Copy link"
@@ -187,13 +187,15 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
                     <path d="M14 11a5 5 0 0 0-7.07 0L4.81 13.1a5 5 0 0 0 7.07 7.07L13.24 19"/>
                   </svg>
                 </button>
-                {/* Inline count/slider */}
-                <div className="ml-4 flex items-center gap-3 flex-1 min-w-[160px]">
-                  <span className={`text-[10px] uppercase tracking-[0.12em] ${subtle}`}>How Many • {count}</span>
-                  <div className="px-2 flex-1">
-                    <input className="w-full h-1.5 accent-[#0A66C2] dark:accent-[#7CC4FF]" type="range" min={4} max={16} value={count} onChange={(e)=>setCount(Number(e.target.value))}/>
-                  </div>
-                </div>
+              </div>
+            </div>
+
+            {/* How Many */}
+            <div className="md:col-span-1 md:col-start-6">
+              <label className={`mb-1 block text-xs uppercase tracking-widest opacity-70 ${isDark ? "text-slate-300" : "text-slate-600"}`}>How Many</label>
+              <div className="mt-2">
+                <input className="w-full h-1.5 accent-[#0A66C2] dark:accent-[#7CC4FF]" type="range" min={4} max={16} value={count} onChange={(e)=>setCount(Number(e.target.value))}/>
+                <div className={`mt-1 text-xs ${isDark ? "text-slate-400" : "text-slate-600"}`}>{count} titles</div>
               </div>
             </div>
           </div>
