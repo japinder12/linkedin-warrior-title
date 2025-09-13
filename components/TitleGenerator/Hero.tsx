@@ -33,7 +33,7 @@ export default function Hero({ isDark, onToggleTheme }: Props) {
           <div className="flex items-center gap-3 md:gap-4 flex-wrap">
             <h1
               style={{
-              fontFamily: "var(--font-sans)",
+              fontFamily: "var(--font-linkedin)",
               backgroundImage:
                 "linear-gradient(92deg, var(--title-accent-start) 0%, var(--title-accent-mid) 48%, var(--title-accent-end) 100%)",
               }}
@@ -53,8 +53,13 @@ export default function Hero({ isDark, onToggleTheme }: Props) {
               <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 2l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5Z" fill="currentColor" opacity={isDark ? 0.9 : 0.8} />
               </svg>
-              <span className="text-[16px] md:text-[18px] font-medium tracking-wide" style={{ fontFamily: "var(--font-sans)" }}>
-                the <span className="font-semibold text-[var(--accent)]">LinkedIn</span> title generator
+              <span
+                className="text-[16px] md:text-[18px] font-medium tracking-wide"
+                style={{ fontFamily: "var(--font-linkedin)" }}
+              >
+                the{" "}
+                <span className="font-semibold text-[var(--accent)]">LinkedIn</span>{" "}
+                title generator
               </span>
             </div>
           </div>
