@@ -1,7 +1,11 @@
 # LinkedOut ⚔️
 
+An absurdly serious, deterministic title generator that turns your role into LinkedIn‑coded flex lines — professional, plausible, and just unhinged enough.
+
 Upgrade your LinkedIn aura in 1 click.  
-Type your role → get a lineup of ridiculous, over-inflated titles ready to copy-paste into your profile or next humblebrag post.  
+Type your role → get a lineup of ridiculous, over‑inflated titles ready to copy‑paste into your profile or next humblebrag post.
+
+![LinkedOut screenshot](linkedout-ss.png)
 
 ---
 
@@ -10,7 +14,7 @@ Type your role → get a lineup of ridiculous, over-inflated titles ready to cop
   *Global Visionary Software Engineer Strategist · 10x*  
 - Works beyond tech → project managers, founders, nurses, marketers… all get their own flavor of chaos.  
 - Each run is seeded, so you can **share a link** and friends will see the same cursed list.  
-- Light/dark mode toggle, one-click copy, max 16 absurd titles at a time.  
+- Light/dark mode toggle, one-click copy, up to 16 absurd titles at a time.  
 
 ---
 
