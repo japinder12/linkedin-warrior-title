@@ -8,6 +8,7 @@ import CountSlider from "./Controls/CountSlider";
 import MemeModeToggle from "./Controls/MemeModeToggle";
 import ResultsHeader from "./Results/ResultsHeader";
 import TitleGrid from "./Results/TitleGrid";
+import Footer from "./Footer";
 
 import { useTheme } from "@/hooks/useTheme";
 import { useShareUrl } from "@/hooks/useShareUrl";
@@ -38,9 +39,19 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
       <div className="w-full max-w-3xl">
         <Hero isDark={isDark} onToggleTheme={()=>setDarkMode(!darkMode)} />
 
-        {/* Controls: single-row, horizontally scrollable on small screens */}
-        <div className={`${panel} border rounded-2xl p-5 mb-6`}>
-          <div className="flex gap-6 md:gap-8 overflow-x-auto">
+        {/* Controls: two rows on md+ for balance; single horizontal scroll on small screens */}
+        <div className={`${panel} border rounded-2xl p-4 mb-6`}>
+          <div className="hidden md:grid md:grid-cols-3 gap-6 items-start content-start">
+            <RoleInput role={role} setRole={setRole} isDark={isDark} inputClass={input} />
+            <PresetsRow role={role} setRole={setRole} isDark={isDark} btnBd={btnBd} />
+            <SeedControls setSeed={setSeed} isDark={isDark} btnBd={btnBd} />
+          </div>
+          <div className="hidden md:grid md:grid-cols-2 gap-6 mt-3 items-start content-start">
+            <CountSlider count={count} setCount={setCount} isDark={isDark} />
+            <MemeModeToggle memeMode={memeMode} setMemeMode={setMemeMode} isDark={isDark} btnBd={btnBd} />
+          </div>
+          {/* Mobile: single horizontal row; all 5 controls scrollable */}
+          <div className="md:hidden flex gap-4 overflow-x-auto py-1">
             <RoleInput role={role} setRole={setRole} isDark={isDark} inputClass={input} />
             <PresetsRow role={role} setRole={setRole} isDark={isDark} btnBd={btnBd} />
             <SeedControls setSeed={setSeed} isDark={isDark} btnBd={btnBd} />
@@ -54,6 +65,8 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
           <ResultsHeader isDark={isDark} items={items} />
           <TitleGrid isDark={isDark} items={items} />
         </div>
+
+        <Footer isDark={isDark} btnBd={btnBd} />
       </div>
     </main>
   );

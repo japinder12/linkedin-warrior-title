@@ -38,3 +38,36 @@ html, body {
 body {
   font-family: var(--font-sans);
 }
+
+/* Range slider subtle track/thumb styling */
+input.slider, input[type="range"].slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+input.slider::-webkit-slider-runnable-track {
+  height: 8px;
+  background: transparent;
+  border-radius: 9999px;
+}
+input.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: var(--accent);
+  margin-top: -4px;
+}
+input.slider::-moz-range-track {
+  height: 8px;
+  background: transparent;
+  border-radius: 9999px;
+}
+input.slider::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: var(--accent);
+  border: none;
+}

@@ -29,7 +29,7 @@ export default function TitleCard({ text, dark }: Props) {
     <div
       className={[
         surface,
-        "relative border rounded-2xl p-4 shadow-sm h-full min-h-[100px]", // was p-5 / 120px
+        "relative border rounded-2xl p-3 shadow-sm h-full min-h-[90px]",
         "transition-colors motion-safe:duration-200 hover:shadow-md",
       ].join(" ")}
     >
@@ -66,10 +66,10 @@ export default function TitleCard({ text, dark }: Props) {
       </button>
 
       {/* Title — intentional wrapping */}
-      <div className="pr-20">
+      <div className="pr-16">
         <div
           className={[
-            "text-base md:text-[17px] font-medium leading-tight tracking-tight",
+            "text-[15px] md:text-[16px] font-medium leading-snug tracking-tight antialiased text-balance",
             "whitespace-normal break-words text-pretty",
           ].join(" ")}
         >

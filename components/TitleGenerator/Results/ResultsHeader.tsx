@@ -7,7 +7,7 @@ export default function ResultsHeader({ isDark, items }: Props) {
   const [copied, setCopied] = React.useState(false);
   return (
     <div className="mb-3 flex items-center justify-between">
-      <div className={`text-xs ${isDark ? "text-slate-400" : "text-slate-600"}`}>Generated Titles</div>
+      <div className={`text-sm font-semibold tracking-tight ${isDark ? "text-slate-300" : "text-slate-700"}`}>Generated Titles</div>
       <button
         className={`inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors`}
         onClick={() => { try { navigator.clipboard.writeText(items.join("\n")); setCopied(true); setTimeout(()=>setCopied(false), 1200); } catch {} }}
@@ -29,4 +29,3 @@ export default function ResultsHeader({ isDark, items }: Props) {
     </div>
   );
 }
-
