@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LinkedIn Warrior Title ⚔️
 
-## Getting Started
+Upgrade your LinkedIn aura in 1 click.  
+Type your role → get a lineup of ridiculous, over-inflated titles ready to copy-paste into your profile or next humblebrag post.  
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 💼 What it does
+- Turns **“Software Engineer”** into things like  
+  *Global Visionary Software Engineer Strategist · 10x*  
+- Works beyond tech → project managers, founders, nurses, marketers… all get their own flavor of chaos.  
+- Each run is seeded, so you can **share a link** and friends will see the same cursed list.  
+- Light/dark mode toggle, one-click copy, max 16 absurd titles at a time.  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🎯 Why
+Because LinkedIn titles were never meant to be this serious. Neither is this little project.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This generator leans into the exaggeration, buzzwords, and corporate theater — so you don’t have to.  
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🌐 Try it
+👉 [linkedin-warrior-title.vercel.app](https://linkedin-warrior-title.vercel.app)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
