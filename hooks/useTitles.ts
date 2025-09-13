@@ -13,7 +13,7 @@ export function useTitles(role: string, seed: number, count: number, memeMode: b
   const items = useMemo(() => {
     const N = Math.max(1, Math.min(16, count));
     const out = new Set<string>();
-    const gens = makeTitleGenerators(domain, next);
+    const gens = makeTitleGenerators(domain, next, { role });
     const memeify = memeMode ? memeifyFactory(seedMix) : null;
     let tries = 0;
     const MAX = N * 50;
@@ -39,4 +39,3 @@ export function useTitles(role: string, seed: number, count: number, memeMode: b
 
   return { items, domain } as const;
 }
-

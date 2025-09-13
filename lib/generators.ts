@@ -3,13 +3,15 @@ import type { DomainKey } from "./banks";
 
 import { pick, makeRng } from "./rng";
 
-export function makeTitleGenerators(domain: DomainKey, next: () => number) {
+export function makeTitleGenerators(domain: DomainKey, next: () => number, opts?: { role?: string }) {
   const DIVIDERS = [" · ", " — ", " | "] as const;
   const bank = DOMAIN_BANKS[domain];
+  const role = (opts?.role || "").toLowerCase();
+  const allowAI = /(\bai\b|\bml\b|machine learning|\bllm\b|genai|gpt)/.test(role);
 
   const genTitleX = (r: string) => {
-    const prefixes = [...bank.prefixes, "AI-Native", "AI-Native"];
-    const boosters = [...bank.boosters, "LLM", "GenAI", "AI", "LLM"];
+    const prefixes = [...bank.prefixes];
+    const boosters = allowAI ? [...bank.boosters, "AI"] : [...bank.boosters];
     const pre = pick(next, prefixes);
     const core = pick(next, bank.coresX).replaceAll("X", r);
     const booster = pick(next, boosters);
@@ -18,9 +20,9 @@ export function makeTitleGenerators(domain: DomainKey, next: () => number) {
   };
 
   const genTitleY = (r: string) => {
-    const prefixes = [...bank.prefixes, "AI-Native", "Generative"];
-    const nouns = [...bank.nouns, "AI", "ML"];
-    const boosters = [...bank.boosters, "LLM", "GenAI", "AI"];
+    const prefixes = [...bank.prefixes];
+    const nouns = allowAI ? [...bank.nouns, "AI", "ML"] : [...bank.nouns];
+    const boosters = allowAI ? [...bank.boosters, "AI"] : [...bank.boosters];
     const pre = pick(next, prefixes);
     const noun = pick(next, nouns);
     const core = pick(next, bank.coresY).replaceAll("Y", `${r} ${noun}`);
@@ -30,8 +32,8 @@ export function makeTitleGenerators(domain: DomainKey, next: () => number) {
   };
 
   const genTitleLoose = (r: string) => {
-    const prefixes = [...bank.prefixes, "AI-Native", "AI"];
-    const boosters = [...bank.boosters, "LLM", "GenAI", "AI"];
+    const prefixes = [...bank.prefixes];
+    const boosters = allowAI ? [...bank.boosters, "AI"] : [...bank.boosters];
     const pre = pick(next, [prefixes[0] || "Global", "Chief", "Lead", "Principal", prefixes[1] || "Senior"]);
     const mid = pick(next, [
       `${r} & ${pick(next, boosters)}`,
@@ -80,4 +82,3 @@ export function memeifyFactory(seedMix: number) {
     return `${base}${suffix}${badge}`;
   };
 }
-

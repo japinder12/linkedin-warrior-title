@@ -6,6 +6,14 @@ export const POSTFIXES= ["· Driving Impact at Scale"," | Storyteller"," — Bui
 export const Y_NOUNS  = ["Strategy","Systems","Outcomes","Programs","Roadmaps","Excellence"];
 
 export const DOMAIN_BANKS = {
+  general: {
+    prefixes: ["Global","Senior","Lead","Principal","Regional","Strategic"],
+    boosters: ["Scale","Quality","Impact","Efficiency","Growth"],
+    nouns: ["Operations","Programs","Excellence","Outcomes","Systems","Services"],
+    coresX: ["X Strategist","X Lead","X Coordinator","X Specialist","X Manager","X Partner"],
+    coresY: ["Head of Y","Director of Y","Steward of Y","Custodian of Y"],
+    postfixes: [" - Driving Outcomes"," - Systems Over Chaos"," - Stakeholder First"],
+  },
   tech: {
     prefixes: PREFIXES,
     boosters: ["0→1","10x","Scale","LLM","GenAI","Platform","Infra","Data","Reliability","Security"],
@@ -61,6 +69,38 @@ export const DOMAIN_BANKS = {
     coresX: ["X Coordinator","X Designer","X Instructor","X Advisor"],
     coresY: ["Director of Y","Head of Y"],
     postfixes: [" · Learning First"],
+  },
+  legal: {
+    prefixes: ["General","Senior","Lead","Corporate","Regulatory"],
+    boosters: ["Regulatory","Ethics","Governance","Risk"],
+    nouns: ["Counsel","Compliance","Governance","Contracts","Risk"],
+    coresX: ["X Counsel","X Advisor","X Specialist","X Operations Lead"],
+    coresY: ["Director of Y","Head of Y","Steward of Y"],
+    postfixes: [" - Sound Judgment"],
+  },
+  creative: {
+    prefixes: ["Creative","Senior","Lead","Art","Executive"],
+    boosters: ["Taste","Craft","Story","Originality"],
+    nouns: ["Design","Content","Brand","Film","Editorial"],
+    coresX: ["X Director","X Producer","X Strategist","X Lead","X Partner"],
+    coresY: ["Head of Y","Director of Y","Steward of Y"],
+    postfixes: [" - From Brief to Breakthrough"],
+  },
+  data_analytics: {
+    prefixes: ["Senior","Lead","Insights","Analytics","Data"],
+    boosters: ["Clarity","Rigor","Signal","Impact"],
+    nouns: ["Analytics","Insights","Reporting","Experimentation"],
+    coresX: ["X Analyst","X Scientist","X Strategist","X Partner"],
+    coresY: ["Head of Y","Director of Y"],
+    postfixes: [" - Evidence Over Opinions"],
+  },
+  customer_success: {
+    prefixes: ["Customer","Client","Success","Senior","Lead"],
+    boosters: ["NPS","Adoption","Retention","Value"],
+    nouns: ["Success","Support","Enablement","Onboarding","Retention"],
+    coresX: ["X Manager","X Partner","X Advocate","X Strategist"],
+    coresY: ["Head of Y","Director of Y"],
+    postfixes: [" - Outcomes Over Outputs"],
   },
 };
 
