@@ -22,7 +22,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
   const initialSeed = Number.isFinite(seedParam)
     ? (seedParam as number)
     : strHash(initialRole) ^ 0x9e3779b1;
-  const initialCount = Math.max(1, Math.min(16, Number.isFinite(nParam) ? (nParam as number) : 12));
+  const initialCount = Math.max(1, Math.min(16, Number.isFinite(nParam) ? (nParam as number) : 6));
 
   return <TitleGenerator initialRole={initialRole} initialSeed={initialSeed} initialCount={initialCount} />;
 }
