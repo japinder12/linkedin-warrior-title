@@ -1,5 +1,3 @@
-# write app/page.tsx
-cat > app/page.tsx <<'TSX'
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -105,4 +103,3 @@ export default function Page() {
     </main>
   );
 }
-TSX
