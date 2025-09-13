@@ -14,7 +14,9 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
   const [count, setCount] = useState<number>(Math.min(16, initialCount));
   const [darkMode, setDarkMode] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [listCopied, setListCopied] = useState(false);
   const [shuffling, setShuffling] = useState(false);
+  // dice animation state
   const [dieA, setDieA] = useState(5);
   const [dieB, setDieB] = useState(1);
 
@@ -50,6 +52,7 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
   const next = useMemo(() => makeRng(seed ^ (role.length << 1) ^ domain.length), [seed, role, domain]);
 
   // generators
+  const DIVIDERS = useMemo(() => [" · ", " — ", " | "], []);
   const genTitleX = useCallback((r: string) => {
     const bank = DOMAIN_BANKS[domain];
     const prefixes = [...bank.prefixes, "AI-Native", "AI-Native"];
@@ -57,8 +60,9 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
     const pre = pick(next, prefixes);
     const core = pick(next, bank.coresX).replaceAll("X", r);
     const booster = pick(next, boosters);
-    return `${pre} ${core} · ${booster}`;
-  }, [domain, next]);
+    const divider = pick(next, DIVIDERS);
+    return `${pre} ${core}${divider}${booster}`;
+  }, [domain, next, DIVIDERS]);
   const genTitleY = useCallback((r: string) => {
     const bank = DOMAIN_BANKS[domain];
     const prefixes = [...bank.prefixes, "AI-Native", "Generative"];
@@ -68,8 +72,9 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
     const noun = pick(next, nouns);
     const core = pick(next, bank.coresY).replaceAll("Y", `${r} ${noun}`);
     const booster = pick(next, boosters);
-    return `${pre} ${core} · ${booster}`;
-  }, [domain, next]);
+    const divider = pick(next, DIVIDERS);
+    return `${pre} ${core}${divider}${booster}`;
+  }, [domain, next, DIVIDERS]);
   const genTitleLoose = useCallback((r: string) => {
     const bank = DOMAIN_BANKS[domain];
     const prefixes = [...bank.prefixes, "AI-Native", "AI"];
@@ -80,17 +85,35 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
       `${pick(next, boosters)}-First ${r}`,
       `${r} (${pick(next, boosters)})`,
     ]);
-    const post = pick(next, bank.postfixes || []);
-    return `${pre} ${mid}${post ?? ""}`;
-  }, [domain, next]);
+    const booster = pick(next, boosters);
+    const divider = pick(next, DIVIDERS);
+    return `${pre} ${mid}${divider}${booster}`;
+  }, [domain, next, DIVIDERS]);
 
   const items = useMemo(() => {
-    const out: string[] = [];
-    for (let i = 0; i < Math.max(1, Math.min(16, count)); i++) {
-      const g = pick(next, [genTitleX, genTitleY, genTitleLoose] as const);
-      out.push(g(role));
+    const N = Math.max(1, Math.min(16, count));
+    const out = new Set<string>();
+    const gens = [genTitleX, genTitleY, genTitleLoose] as const;
+    let tries = 0;
+    const MAX = N * 50;
+    while (out.size < N && tries < MAX) {
+      const g = pick(next, gens);
+      const t = g(role).trim();
+      if (t.length <= 100) out.add(t);
+      tries++;
     }
-    return out;
+    // last-resort: if still short, append tiny dedupe marks staying within 100 chars
+    if (out.size < N) {
+      const base = Array.from(out);
+      let i = 0;
+      while (out.size < N && i < base.length) {
+        const mark = ` · ${out.size + 1}`;
+        const candidate = base[i].length + mark.length <= 100 ? base[i] + mark : base[i];
+        out.add(candidate);
+        i++;
+      }
+    }
+    return Array.from(out).slice(0, N);
   }, [role, count, next, genTitleX, genTitleY, genTitleLoose]);
 
   // theming
@@ -102,23 +125,67 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
     : "bg-white border-slate-300 focus:ring-2 focus:ring-[var(--accent-40)] focus:border-[var(--accent)] placeholder:text-slate-400";
   const btnBd  = isDark ? "border-slate-700" : "border-slate-300";
   const subtle = isDark ? "text-slate-400" : "text-slate-600";
-  const hook = "Generate absurdly serious LinkedIn titles in one click.";
+  const hook = "Generate absurdly serious LinkedIn titles. From 'Intern' to 'Chief Visionary Officer' in just one click.";
 
   return (
     <main className={`min-h-screen ${root} flex flex-col items-center p-6`}>
       <div className="w-full max-w-3xl">
-        <header className="mb-6 space-y-2">
-          <div className="flex items-center justify-between gap-3">
-            <h1
+        <header className="relative mb-7">
+          {/* background flair: soft orb + faint grid */}
+          <div className="pointer-events-none absolute inset-0 -z-10">
+            <div
+              className="absolute -top-24 right-[-80px] h-64 w-64 rounded-full"
               style={{
-                fontFamily: "var(--font-display)",
-                backgroundImage:
-                  "linear-gradient(90deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 55%, #084482) 100%)",
+                background:
+                  "radial-gradient(closest-side, color-mix(in srgb, var(--accent) 25%, transparent), transparent 70%)",
+                filter: "blur(12px)",
+                opacity: isDark ? 0.35 : 0.25,
               }}
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight bg-clip-text text-transparent"
-            >
-              LinkedIn Title Generator
-            </h1>
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  "linear-gradient(transparent 23px, color-mix(in srgb, var(--accent) 10%, transparent) 24px), linear-gradient(90deg, transparent 23px, color-mix(in srgb, var(--accent) 10%, transparent) 24px)",
+                backgroundSize: "24px 24px, 24px 24px",
+                maskImage: "radial-gradient(70% 60% at 60% 0%, #000 40%, transparent 100%)",
+                WebkitMaskImage: "radial-gradient(70% 60% at 60% 0%, #000 40%, transparent 100%)",
+                opacity: isDark ? 0.08 : 0.06,
+              }}
+            />
+          </div>
+
+          <div className="flex items-start justify-between gap-4">
+            <div className="max-w-full">
+              <div className="flex flex-wrap items-center gap-2 md:gap-3">
+                <h1
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    backgroundImage:
+                      "linear-gradient(92deg, var(--title-accent-start) 0%, var(--title-accent-mid) 48%, var(--title-accent-end) 100%)",
+                  }}
+                  className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight tracking-tight bg-clip-text text-transparent drop-shadow-[0_1px_0_rgba(0,0,0,0.10)] dark:drop-shadow-[0_1px_0_rgba(0,0,0,0.35)]"
+                >
+                  LinkedOut
+                </h1>
+                <div
+                  className={[
+                    "inline-flex items-center gap-2 rounded-full border px-4 md:px-5 py-2 shadow-sm shrink-0 ml-1 translate-y-[2px]",
+                    isDark
+                      ? "border-slate-700 bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-slate-50"
+                      : "border-slate-300 bg-[color-mix(in_srgb,var(--accent)_8%,#fff)] text-slate-900",
+                  ].join(" ")}
+                  aria-label="Subtitle"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5Z" fill="currentColor" opacity={isDark ? 0.9 : 0.8} />
+                  </svg>
+                  <span className="text-sm md:text-base tracking-wide">
+                    the <span className="font-semibold text-[var(--accent)]">LinkedIn</span> title generator
+                  </span>
+                </div>
+              </div>
+            </div>
             <button
               className={`group px-3 py-2 rounded-xl text-sm border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[var(--accent-40)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors`}
               onClick={() => setDarkMode(!darkMode)}
@@ -136,18 +203,18 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
               )}
             </button>
           </div>
-          <p className={`text-sm ${subtle}`}>{hook}</p>
+          <p className={`mt-4 text-sm ${subtle}`}>{hook}</p>
         </header>
 
         {/* Controls */}
-        <div className={`${panel} border rounded-2xl p-6 mb-6`}>
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-6 items-start">
+        <div className={`${panel} border rounded-2xl p-5 mb-6`}>
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-5 items-start">
             {/* Role */}
             <div className="md:col-span-4">
               <label className={`mb-1 block text-xs uppercase tracking-widest opacity-70 ${isDark ? "text-slate-300" : "text-slate-600"}`}>Your Role</label>
               <div className="flex items-center gap-2 min-w-0">
                 <input
-                  className={`h-10 flex-1 rounded-lg px-3 text-base outline-none ring-1 min-w-0 ${input}`}
+                  className={`h-8 flex-1 rounded-lg px-3 text-base outline-none ring-1 min-w-0 ${input}`}
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                   placeholder="e.g., Software Engineer, Product Manager"
@@ -170,9 +237,9 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
             {/* Seed */}
             <div className="md:col-span-1">
               <label className={`mb-1 block text-xs uppercase tracking-widest opacity-70 ${isDark ? "text-slate-300" : "text-slate-600"}`} title="Seed controls">Seed</label>
-              <div className="mt-2 flex items-center justify-start w-full min-w-0 gap-2">
+              <div className="mt-1.5 flex items-center justify-start w-full min-w-0 gap-2">
                 <button
-                  className={`h-11 w-11 md:h-9 md:w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[var(--accent-40)] hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors`}
+                  className={`h-11 w-11 md:h-10 md:w-10 inline-flex items-center justify-center rounded-lg hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors`}
                   onClick={()=>{
                     setSeed(Math.floor(Math.random()*1e9));
                     setShuffling(true);
@@ -186,18 +253,20 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
                   title="Shuffle seed"
                 >
                   <svg
-                    width="24"
-                    height="24"
+                    width="26"
+                    height="26"
                     viewBox="0 0 24 24"
-                    fill="currentColor"
                     aria-hidden="true"
-                    className={`${isDark ? "text-slate-200" : "text-slate-700"} ${shuffling ? "animate-spin" : ""}`}
+                    className={`${isDark ? "text-slate-200" : "text-slate-700"} ${shuffling ? "animate-spin" : ""} transition-colors group-hover:text-[var(--accent)]`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
                   >
                     <rect x="2" y="2" width="10" height="10" rx="2"/>
                     {(() => {
                       const p: React.ReactNode[] = [];
                       const pip = (cx: number, cy: number, i: number) => (
-                        <circle key={`a${i}`} cx={cx} cy={cy} r={1.2} fill={isDark ? "#0EA5E9" : "#2563EB"} />
+                        <circle key={`a${i}`} cx={cx} cy={cy} r={0.5} fill={isDark ? "#0EA5E9" : "#2563EB"} />
                       );
                       const m = { 1: [7,7], 2: [5,5, 9,9], 3: [5,5, 7,7, 9,9], 4: [5,5, 9,5, 5,9, 9,9], 5: [5,5, 9,5, 7,7, 5,9, 9,9], 6: [5,5, 5,7, 5,9, 9,5, 9,7, 9,9] } as Record<number, number[]>;
                       const arr = m[dieA] || m[5];
@@ -208,7 +277,7 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
                     {(() => {
                       const p: React.ReactNode[] = [];
                       const pip = (cx: number, cy: number, i: number) => (
-                        <circle key={`b${i}`} cx={cx+10} cy={cy+10} r={1.2} fill={isDark ? "#0EA5E9" : "#2563EB"} />
+                        <circle key={`b${i}`} cx={cx+10} cy={cy+10} r={0.7} fill={isDark ? "#0EA5E9" : "#2563EB"} />
                       );
                       const m = { 1: [7,7], 2: [5,5, 9,9], 3: [5,5, 7,7, 9,9], 4: [5,5, 9,5, 5,9, 9,9], 5: [5,5, 9,5, 7,7, 5,9, 9,9], 6: [5,5, 5,7, 5,9, 9,5, 9,7, 9,9] } as Record<number, number[]>;
                       const arr = m[dieB] || m[1];
@@ -218,19 +287,19 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
                   </svg>
                 </button>
                 <button
-                  className={`h-11 w-11 md:h-9 md:w-9 inline-flex items-center justify-center rounded-lg border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[var(--accent-40)] hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors`}
-                  onClick={() => { try { navigator.clipboard.writeText(window.location.href); setLinkCopied(true); setTimeout(()=>setLinkCopied(false), 1200); } catch {} }}
-                  aria-label={linkCopied ? "Link copied" : "Copy link"}
-                  title={linkCopied ? "Link copied" : "Copy link"}
+                  className={`h-11 w-11 md:h-10 md:w-10 inline-flex items-center justify-center rounded-lg hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors`}
+                  onClick={() => { try { navigator.clipboard.writeText(items.join("\n")); setListCopied(true); setTimeout(()=>setListCopied(false), 1200); } catch {} }}
+                  aria-label={listCopied ? "List copied" : "Copy all to clipboard"}
+                  title={listCopied ? "List copied" : "Copy all to clipboard"}
                 >
-                  {linkCopied ? (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-emerald-400" aria-hidden="true">
+                  {listCopied ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-emerald-400" aria-hidden="true">
                       <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   ) : (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M8 7h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" />
-                      <path d="M16 7V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1" />
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M16 4h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1" />
+                      <rect x="9" y="2" width="6" height="4" rx="1.5" />
                     </svg>
                   )}
                 </button>
@@ -247,7 +316,7 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
             </div>
           </div>
           {/* SR-only aria-live for link copied */}
-          <span className="sr-only" aria-live="polite" role="status">{linkCopied ? "Link copied to clipboard" : ""}</span>
+          <span className="sr-only" aria-live="polite" role="status">{linkCopied ? "Link copied to clipboard" : listCopied ? "List copied to clipboard" : ""}</span>
         </div>
 
         {/* Results */}
@@ -259,6 +328,23 @@ export default function TitleGenerator({ initialRole, initialSeed, initialCount 
         <footer className={`mt-6 text-xs ${subtle} flex items-center justify-between`}>
           <span>Powered by chaotic neutral energy.</span>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => { try { navigator.clipboard.writeText(window.location.href); setLinkCopied(true); setTimeout(()=>setLinkCopied(false), 1200); } catch {} }}
+              aria-label={linkCopied ? "Link copied" : "Copy link"}
+              title={linkCopied ? "Link copied" : "Copy link"}
+              className={`inline-flex items-center justify-center w-9 h-9 rounded-xl border ${btnBd} hover:bg-black/5 dark:hover:bg-white/5 hover:border-[var(--accent-40)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)] transition-colors`}
+            >
+              {linkCopied ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-emerald-400" aria-hidden="true">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M10 13a5 5 0 0 1 7 0l3 3a5 5 0 0 1-7 7l-1-1" />
+                  <path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 1 0 7 7l1-1" />
+                </svg>
+              )}
+            </button>
             <a
               href="https://github.com/japinder12/linkedin-warrior-title"
               target="_blank"

@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-san
 const display = Space_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-display" });
 
 export const metadata: Metadata = {
-  title: "LinkedIn Title Generator",
+  title: "LinkedOut — the LinkedIn title generator",
   description: "Generate absurdly serious LinkedIn titles in one click.",
   icons: {
     icon: "/icon.svg",
@@ -15,14 +15,14 @@ export const metadata: Metadata = {
     apple: "/icon.svg",
   },
   openGraph: {
-    title: "LinkedIn Title Generator",
+    title: "LinkedOut — the LinkedIn title generator",
     description: "Generate absurdly serious LinkedIn titles in one click.",
     type: "website",
-    images: [{ url: "/og.svg", width: 1200, height: 630, alt: "LinkedIn Title Generator" }],
+    images: [{ url: "/og.svg", width: 1200, height: 630, alt: "LinkedOut — the LinkedIn title generator" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "LinkedIn Title Generator",
+    title: "LinkedOut — the LinkedIn title generator",
     description: "Generate absurdly serious LinkedIn titles in one click.",
     images: ["/og.svg"],
   },

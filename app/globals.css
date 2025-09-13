@@ -10,14 +10,29 @@ html, body {
   --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   --font-display: var(--font-sans);
   --accent: #0A66C2;
+  /* Derived accents for nicer gradients */
+  --accent-light: color-mix(in srgb, var(--accent) 85%, white);
+  --accent-deep: color-mix(in srgb, var(--accent) 60%, #0B3B88);
+  --accent-gold: #F59E0B; /* amber-500 */
   --accent-10: color-mix(in srgb, var(--accent) 10%, transparent);
   --accent-40: color-mix(in srgb, var(--accent) 40%, transparent);
+  /* Title gradient hues (light) */
+  --title-accent-start: #22D3EE; /* cyan-400 */
+  --title-accent-mid:   #0EA5E9; /* sky-500 */
+  --title-accent-end:   #2563EB; /* blue-600 */
 }
 
 .dark {
   --accent: #7CC4FF;
+  --accent-gold: #FBBF24; /* amber-400 */
+  --accent-light: color-mix(in srgb, var(--accent) 70%, #E6F2FF);
+  --accent-deep: color-mix(in srgb, var(--accent) 65%, #0B3B88);
   --accent-10: color-mix(in srgb, var(--accent) 10%, transparent);
   --accent-40: color-mix(in srgb, var(--accent) 40%, transparent);
+  /* Title gradient hues (dark) */
+  --title-accent-start: #67E8F9; /* cyan-300 */
+  --title-accent-mid:   #38BDF8; /* sky-400 */
+  --title-accent-end:   #60A5FA; /* blue-400 */
 }
 
 body {
