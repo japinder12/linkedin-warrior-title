@@ -27,7 +27,14 @@ export default function SeedControls({ isDark, onShuffle }: Props) {
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-40)]
                     transition-colors`}
       >
-        <span role="img" aria-hidden className="text-[16px] leading-none" title="Shuffle">🎲</span>
+        <span
+          role="img"
+          aria-hidden
+          title="Shuffle"
+          className="inline-flex items-center justify-center w-4 h-4 leading-none"
+        >
+          🎲
+        </span>
         Shuffle
       </button>
     </div>

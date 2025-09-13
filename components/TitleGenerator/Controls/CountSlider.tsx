@@ -31,7 +31,7 @@ export default function CountSlider({ isDark, count, setCount }: Props) {
         />
       </div>
 
-      <div className={`mt-2 text-center text-lg ${isDark ? "text-slate-200" : "text-slate-800"}`}>
+      <div className={`mt-2 text-center text-[11px] uppercase tracking-wide font-medium ${label}`}>
         {count} titles
       </div>
 
