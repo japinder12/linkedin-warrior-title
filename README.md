@@ -1,4 +1,4 @@
-# LinkedOut ⚔️
+# LinkedOut ✨
 
 An absurdly serious, deterministic title generator that turns your role into LinkedIn‑coded flex lines — professional, plausible, and just unhinged enough.
 
