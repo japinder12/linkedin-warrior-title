@@ -89,7 +89,7 @@ export default function Hero({ isDark, onToggleTheme }: Props) {
               viewBox="0 0 24 24"
               fill="currentColor"
               aria-hidden="true"
-              className="drop-shadow-[0_0_2px_rgba(0,0,0,0.15)] group-hover:brightness-110"
+              className="text-slate-500 dark:text-slate-400 drop-shadow-[0_0_2px_rgba(0,0,0,0.2)]"
             >
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
             </svg>

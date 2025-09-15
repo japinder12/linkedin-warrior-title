@@ -52,6 +52,7 @@ body {
 }
 .no-spinners[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* Range slider subtle track/thumb styling */
